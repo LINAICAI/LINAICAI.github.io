@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="LI NAICAI,linaicai2012@gmail.com"><title>Linux日常管理(一) · Nice'Blog</title><meta name="description" content="问题最近有个虚拟主机快到期，打算使用Linode上新的VPS所以准备迁移到另一台香港VPS（和虚拟主机同一个代理商），结果发现无法SSH登录，然后打开网址也发现无法访问，SVN也没发刷新，PING却通了，可以肯定的是系统是正常运行的但几乎所有程序都启动不正常，提交了工单，客服回复我是系统卡死，对方帮"><meta name="keywords" content="iOS,PHP,Python,Linux,Ubuntu,CentOS,HTML,CSS,Django,Laravel"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">Nice'Blog</a></h3><div class="description"><p>Stupid bird fly first.</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/LINAICAI"><i class="fa fa-twitter"></i></a></li><li><a href="http://instagram.com/LINAICAI"><i class="fa fa-instagram"></i></a></li><li><a href="/atom.xml"><i class="fa fa-rss"></i></a></li><li><a href="http://weibo.com/LINAICAI"><i class="fa fa-weibo"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai</a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a onclick="window.history.go(-1)" class="fa fa-chevron-left"> </a></li></div><div class="avatar"><img src="https://v2ex.assets.uxengine.net/avatar/4e13/cab9/48493_large.png?m=1430968523"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Linux日常管理(一)</a></h3></div><div class="post-content"><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>最近有个虚拟主机快到期，打算使用Linode上新的VPS所以准备迁移到另一台香港VPS（和虚拟主机同一个代理商），结果发现无法SSH登录，然后打开网址也发现无法访问，SVN也没发刷新，PING却通了，可以肯定的是系统是正常运行的但几乎所有程序都启动不正常，提交了工单，客服回复我是系统卡死，对方帮我重启机器，我重新登录进去后启动SVN服务后发现又无法访问，最后经过客服确认内存溢出。</p>
+<p>第一时间觉得卧槽我的CentOS几乎没怎么动过，一直都能正常运行啊，就算内存几乎爆满，也不至于溢出吧，于是使用<br><code>ps -A</code><br>命令看进程，发现除了一些系统服务进程，并没有可疑进程，不过我想删了一些明显没用到的和多余的总没错吧<br><img src="/2016/04/16/Linux日常管理-一/C2E57850-7519-433D-8B47-8B808F2790F8.png" alt="This is an example image" title="This is an example image"></p>
+<a id="more"></a>
+<p>其中，发现pptpd(已经全面转为使用SS代理)这个以前遗留下来的VPN服务进程，和一堆类似的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/dev/tty1</div><div class="line">/dev/tty2</div><div class="line">/dev/tty3</div><div class="line">/dev/tty4</div><div class="line">/dev/tty5</div><div class="line">/dev/tty6</div></pre></td></tr></table></figure>
+<p>查了资料才知道这东西是因为CentOS系统默认的6个打开的控制台，会驻留内存，于是准备删除多余的，下面就是过程步骤：</p>
+<h3 id="删除pptpd"><a href="#删除pptpd" class="headerlink" title="删除pptpd"></a>删除pptpd</h3><p>由于这个服务是开机启动的，所以要先停止<br><code>service pptpd stop</code><br>然后<br><code>yum remove pptpd</code><br>完事</p>
+<h3 id="删除多余的控制台进程"><a href="#删除多余的控制台进程" class="headerlink" title="删除多余的控制台进程"></a>删除多余的控制台进程</h3><p>首先找到TTY的配置文件编辑</p>
+<p><code>vi /etc/init/start-ttys.conf</code></p>
+<p>找到 tty [1-6] 改成 tty [1-2]，然后</p>
+<p><code>vi /etc/sysconfig/init</code></p>
+<p>找到</p>
+<p><code>ACTIVE_CONSOLES=/dev/tty[1-6]</code></p>
+<p>修改为</p>
+<p><code>ACTIVE_CONSOLES=/dev/tty[1-2]</code></p>
+<p>重启机器<code>reboot</code></p>
+<p>最后，发现每次reboot后都需要重新启动svn服务，这是有多恶心啊，于是仿照网友的做法写了个启动脚本，让服务器每次启动时自动加载这个脚本来完成svn服务的开启，下面是过程：</p>
+<h3 id="创建脚本"><a href="#创建脚本" class="headerlink" title="创建脚本"></a>创建脚本</h3><p><code>vi /var/svn/svn_startup.sh</code></p>
+<p>进入编辑模式，输入</p>
+<p><code>#!/bin/bash
+/usr/bin/svnserve -d -r /var/svn/svnrepos</code></p>
+<p>注意第二行前面部分是svnserve的安装路径，可以使用which svnserve查看到，后面是你的svn的repo的路径，/var/svn/svnrepos是我习惯的使用路径，我把脚本也放到/var/svn下了，方便管理。</p>
+<h3 id="添加权限"><a href="#添加权限" class="headerlink" title="添加权限"></a>添加权限</h3><p>脚本需要添加权限才能正常运行，使用</p>
+<p><code>chmod 777 /var/svn/svn_startup.sh</code></p>
+<h3 id="加入开机自动运行"><a href="#加入开机自动运行" class="headerlink" title="加入开机自动运行"></a>加入开机自动运行</h3><p><code>vi /etc/rc.d/rc.local</code></p>
+<p>在末尾添加脚本的路径</p>
+<p><code>/var/svn/svn_startup.sh</code></p>
+<p>保存并重启一下机器，然后验证一下svn服务是否自动启动</p>
+<p><code>ps -ef|grep svnserve</code></p>
+<p>最后，今天收获很大，不过还没有解决的问题是，CentOS上面httpd服务进程数有时候很多，有时候又很少，暂时猜测是apache的服务机制，收到一个http请求就会新建一个httpd进程来完成php脚本解析，后续会专门研究写关于Apache的文章。</p>
+<h3 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h3><p>其实最占内存的进程是mysqld，这个都知道是数据库的守护进程，而我发现mysql55w版本存在内存使用巨大，而mysql5.1.3版本的就没有这个问题，基于当前服务器上对数据库版本要求不大，所以更换了mysql5.1.3后，内存使用就正常了。</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2016-04-16</span><i class="fa fa-comment-o"></i><a href="/2016/04/16/Linux日常管理-一/#comments">评论</a><i class="fa fa-tag"></i><a href="/categories/Linux/" title="Linux" class="tag">Linux </a><a href="/tags/Linux/" title="Linux" class="tag">Linux </a></div></div></div></div><div class="share"><div class="evernote"> <a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"> <a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"> <a href="http://twitter.com/home?status=,http://yoursite.com/2016/04/16/Linux日常管理-一/,Nice'Blog,Linux日常管理(一),;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a role="navigation" href="/2016/06/04/iOS生成二维码/" title="iOS生成二维码" class="btn">上一篇</a></li><li class="next pagbuttons"><a role="navigation" href="/2016/03/13/iOS-如何创建和使用静态库/" title="iOS 如何创建和使用静态库" class="btn">下一篇</a></li></ul></div><a id="comments"></a><div data-thread-key="2016/04/16/Linux日常管理-一/" data-title="Linux日常管理(一)" data-url="http://yoursite.com/2016/04/16/Linux日常管理-一/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"i3rr"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
