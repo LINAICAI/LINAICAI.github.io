@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://linaicai.github.io/"/>
-  <updated>2017-05-20T16:45:52.000Z</updated>
+  <updated>2017-07-24T16:42:01.000Z</updated>
   <id>https://linaicai.github.io/</id>
   
   <author>
@@ -20,32 +20,33 @@
     <link href="https://linaicai.github.io/2017/05/20/%E5%B1%9E%E6%80%A7%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/"/>
     <id>https://linaicai.github.io/2017/05/20/属性和实例变量/</id>
     <published>2017-05-20T11:43:03.000Z</published>
-    <updated>2017-05-20T16:45:52.000Z</updated>
+    <updated>2017-07-24T16:42:01.000Z</updated>
     
     <content type="html"><![CDATA[<p>我们都知道属性的声明如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property(nonatomic , copy)NSString *userName;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span> , <span class="keyword">copy</span>)<span class="built_in">NSString</span> *userName;</div></pre></td></tr></table></figure>
 <p>并且自动合成的实例变量是_userName;</p>
-<p>那么两者的区别和联系:<br>由于某些安全原因，OC的属性属于类的封装，属性拥有读写方法，同时也可以用点语法来读写，并且我们可以重写它的读写方法，是一个类对外部访问的接口，而实例变量是由属性生成的内在的实质，真正在内存中存在的是实例变量，属性是它的外部读写接口，只不过它经过了封装。</p>
-<p>需要注意的是读写属性和实例变量的时候需要遵循一些规则(推荐做法)：</p>
+<p>那么两者的区别和联系:<br>由于某些安全原因，OC的属性属于类的封装，属性拥有读写方法，同时也可以用点语法来读写，并且我们可以重写它的读写方法，是一个类对外部访问的接口，而实例变量是由属性生成的内在的实质，真正在内存中存在的是实例变量，属性是它的外部读写接口，只不过它经过了封装。<br><a id="more"></a><br>需要注意的是读写属性和实例变量的时候需要遵循一些规则(推荐做法)：</p>
 <ul>
 <li>在对象内部读取数据时，应该直接通过实例变量来读，而写入数据时，则应该通过属性来写。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">self.userName = @&quot;用户名&quot;;</div><div class="line">NSLog(@&quot;用户名:%@&quot;,_userName);</div></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">self.userName = @<span class="string">"用户名"</span><span class="comment">;</span></div><div class="line">NSLog(@<span class="string">"用户名:%@"</span>,_userName)<span class="comment">;</span></div></pre></td></tr></table></figure>
 <ul>
 <li>在初始化方法及dealloc方法中，总是应该直接通过实例变量来读写数据</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithUserName:(NSString *)userName</div><div class="line">&#123;</div><div class="line">    self = [super init];</div><div class="line">    if (self) &#123;</div><div class="line">        _userName = [userName copy];</div><div class="line">        NSLog(@&quot;userName:%@&quot;,_userName);</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line">- (void)dealloc&#123;</div><div class="line">    _userName = nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">instancetype</span>)initWithUserName:(<span class="built_in">NSString</span> *)userName</div><div class="line">&#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">        _userName = [userName <span class="keyword">copy</span>];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"userName:%@"</span>,_userName);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)dealloc&#123;</div><div class="line">    _userName = <span class="literal">nil</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>有时候使用懒加载初始化技术配置数据，这种情况下需要通过属性来读取数据。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">///例如定义了以下来懒加载的Getter方法</div><div class="line">- (NSString *)userName&#123;</div><div class="line">    if (!_userName) &#123;</div><div class="line">        _userName = @&quot;匿名用户&quot;;</div><div class="line">    &#125;</div><div class="line">    return _userName;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">///则推荐使用属性来读取</div><div class="line">NSLog(@&quot;用户名:%@&quot;,self.userName);</div></pre></td></tr></table></figure>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///例如定义了以下来懒加载的Getter方法</span></div><div class="line">- (NSString *)userName&#123;</div><div class="line">    <span class="keyword">if</span> (!<span class="variable">_userName</span>) &#123;</div><div class="line">        <span class="variable">_userName</span> = @<span class="string">"匿名用户"</span>;</div><div class="line">    &#125;</div><div class="line">    return <span class="variable">_userName</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///则推荐使用属性来读取</span></div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"用户名:%@"</span>,<span class="keyword">self</span>.userName);</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
     
       &lt;p&gt;我们都知道属性的声明如下&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;
+&lt;figure class=&quot;highlight objectivec&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;@property&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;nonatomic&lt;/span&gt; , &lt;span class=&quot;keyword&quot;&gt;copy&lt;/span&gt;)&lt;span class=&quot;built_in&quot;&gt;NSString&lt;/span&gt; *userName;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;并且自动合成的实例变量是_userName;&lt;/p&gt;
+&lt;p&gt;那么两者的区别和联系:&lt;br&gt;由于某些安全原因，OC的属性属于类的封装，属性拥有读写方法，同时也可以用点语法来读写，并且我们可以重写它的读写方法，是一个类对外部访问的接口，而实例变量是由属性生成的内在的实质，真正在内存中存在的是实例变量，属性是它的外部读写接口，只不过它经过了封装。&lt;br&gt;
     
     </summary>
     
@@ -64,7 +65,7 @@
     <updated>2017-03-05T10:07:31.000Z</updated>
     
     <content type="html"><![CDATA[<p>某天忽然心血来潮，看了一下两年前搭建的Hexo博客，发现文章经久没有更新，再想了一下原来这一年来一直都忙着公司的项目，虽然偶尔有写心得笔记的习惯，但居然一直都没有想起更新到博客，于是git clone下来本地写，完了Hexo s发现不行了，网上一看原来Hexo升级了，然后照着官网文档重新搭建起来，下面是我的升级心得。</p>
-<p>1、新版的Hexo生态已经逐渐完善，升级的好处还是很多，不妨迁移一下<br>2、插件库和主题库还算完善，虽然不多，但该有的都有<br>3、静态博客发布到github后，作为github上的一个repo，只有public经过编译后的文件，所以需要另外一个repo来保存你博客的源文件，主要涉及到source和themes、配置文件等，默认根目录下已经有一个.gitgnore文件，可以方便的让你提交这个git项目<br>4、评论系统默认支持duoshuo和disqus，但后者已经被墙了，具体从什么时候开始不知道。<br>5、迁移旧的的博客文章过来其实就是把source目录整个移过来就好了，但需要注意的是新版的静态资源的插入方式略有改动，插入图片使用下面的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% asset_img example.jpg This is an example image %&#125;</div></pre></td></tr></table></figure></p>
+<p>1、新版的Hexo生态已经逐渐完善，升级的好处还是很多，不妨迁移一下<br>2、插件库和主题库还算完善，虽然不多，但该有的都有<br>3、静态博客发布到github后，作为github上的一个repo，只有public经过编译后的文件，所以需要另外一个repo来保存你博客的源文件，主要涉及到source和themes、配置文件等，默认根目录下已经有一个.gitgnore文件，可以方便的让你提交这个git项目<br>4、评论系统默认支持duoshuo和disqus，但后者已经被墙了，具体从什么时候开始不知道。<br>5、迁移旧的的博客文章过来其实就是把source目录整个移过来就好了，但需要注意的是新版的静态资源的插入方式略有改动，插入图片使用下面的方法<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="symbol">%</span> asset_img <span class="built_in">example</span>.jpg This <span class="built_in">is</span> an <span class="built_in">example</span> <span class="built_in">image</span> <span class="symbol">%</span>&#125;</div></pre></td></tr></table></figure></p>
 ]]></content>
     
     <summary type="html">
@@ -85,10 +86,9 @@
     <link href="https://linaicai.github.io/2017/03/05/%E4%BA%91%E5%8D%97/"/>
     <id>https://linaicai.github.io/2017/03/05/云南/</id>
     <published>2017-03-05T07:51:39.000Z</published>
-    <updated>2017-03-05T08:23:45.000Z</updated>
+    <updated>2017-07-24T16:42:54.000Z</updated>
     
-    <content type="html"><![CDATA[<p>其实我是不喜欢外出的人，但妻子就特别喜欢旅游，经不住她的软硬兼施，就选定了云南作为我们的蜜月旅游之地，虽然旅途很累，胜在提前妻子就攻略好，我负责拍摄就好了，下面是我拍的一些照片。</p>
-<p>蓝月谷 | 真的好美，拍婚照取景的天然好地方<br><img src="/2017/03/05/云南/1.jpg" alt="云南图片" title="云南图片"><br><img src="/2017/03/05/云南/6.jpg" alt="云南图片" title="云南图片"><br><img src="/2017/03/05/云南/9.jpg" alt="云南图片" title="云南图片"></p>
+    <content type="html"><![CDATA[<p>其实我是不喜欢外出的人，但妻子就特别喜欢旅游，经不住她的软硬兼施，就选定了云南作为我们的蜜月旅游之地，虽然旅途很累，胜在提前妻子就攻略好，我负责拍摄就好了，下面是我拍的一些照片。<br><a id="more"></a><br>蓝月谷 | 真的好美，拍婚照取景的天然好地方<br><img src="/2017/03/05/云南/1.jpg" alt="云南图片" title="云南图片"><br><img src="/2017/03/05/云南/6.jpg" alt="云南图片" title="云南图片"><br><img src="/2017/03/05/云南/9.jpg" alt="云南图片" title="云南图片"></p>
 <p>洱海 | 不太喜欢太多人而且略有污染<br><img src="/2017/03/05/云南/2.jpg" alt="云南图片" title="云南图片"></p>
 <p>虎跳峡 | 第一次领略到祖国美好山河的险峻<br><img src="/2017/03/05/云南/3.jpg" alt="云南图片" title="云南图片"><br><img src="/2017/03/05/云南/13.jpg" alt="云南图片" title="云南图片"></p>
 <p>泸沽湖 | 西游记中的女儿国有无有<br><img src="/2017/03/05/云南/4.jpg" alt="云南图片" title="云南图片"><br><img src="/2017/03/05/云南/5.jpg" alt="云南图片" title="云南图片"><br><img src="/2017/03/05/云南/10.jpg" alt="云南图片" title="云南图片"></p>
@@ -100,8 +100,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;其实我是不喜欢外出的人，但妻子就特别喜欢旅游，经不住她的软硬兼施，就选定了云南作为我们的蜜月旅游之地，虽然旅途很累，胜在提前妻子就攻略好，我负责拍摄就好了，下面是我拍的一些照片。&lt;/p&gt;
-&lt;p&gt;蓝月谷 | 真的好美，拍婚照取景的天然好地方&lt;br&gt;&lt;img src=&quot;/201
+      &lt;p&gt;其实我是不喜欢外出的人，但妻子就特别喜欢旅游，经不住她的软硬兼施，就选定了云南作为我们的蜜月旅游之地，虽然旅途很累，胜在提前妻子就攻略好，我负责拍摄就好了，下面是我拍的一些照片。&lt;br&gt;
     
     </summary>
     
@@ -117,9 +116,9 @@
     <link href="https://linaicai.github.io/2016/06/04/iOS%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80/"/>
     <id>https://linaicai.github.io/2016/06/04/iOS项目架构小试牛刀/</id>
     <published>2016-06-04T14:42:21.000Z</published>
-    <updated>2017-03-04T09:45:43.000Z</updated>
+    <updated>2017-07-24T16:43:31.000Z</updated>
     
-    <content type="html"><![CDATA[<p>最近为公司一个iOS项目负责架构搭建和开发工作，所以关于架构方面参考了很多资料，最后选用MVVM的设计理念，然后发现现在使用MVVM应该是稍微大一点的项目的必备了吧。</p>
+    <content type="html"><![CDATA[<p>最近为公司一个iOS项目负责架构搭建和开发工作，所以关于架构方面参考了很多资料，最后选用MVVM的设计理念，然后发现现在使用MVVM应该是稍微大一点的项目的必备了吧。<br><a id="more"></a></p>
 <h2 id="然后我想谈谈我对于架构的理解。"><a href="#然后我想谈谈我对于架构的理解。" class="headerlink" title="然后我想谈谈我对于架构的理解。"></a><strong>然后我想谈谈我对于架构的理解。</strong></h2><ul>
 <li>为什么项目需要架构设计？</li>
 </ul>
@@ -132,8 +131,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;最近为公司一个iOS项目负责架构搭建和开发工作，所以关于架构方面参考了很多资料，最后选用MVVM的设计理念，然后发现现在使用MVVM应该是稍微大一点的项目的必备了吧。&lt;/p&gt;
-&lt;h2 id=&quot;然后我想谈谈我对于架构的理解。&quot;&gt;&lt;a href=&quot;#然后我想谈谈我对于架构的理解
+      &lt;p&gt;最近为公司一个iOS项目负责架构搭建和开发工作，所以关于架构方面参考了很多资料，最后选用MVVM的设计理念，然后发现现在使用MVVM应该是稍微大一点的项目的必备了吧。&lt;br&gt;
     
     </summary>
     
@@ -149,18 +147,16 @@
     <link href="https://linaicai.github.io/2016/06/04/iOS%E7%94%9F%E6%88%90%E4%BA%8C%E7%BB%B4%E7%A0%81/"/>
     <id>https://linaicai.github.io/2016/06/04/iOS生成二维码/</id>
     <published>2016-06-04T13:38:05.000Z</published>
-    <updated>2017-03-04T09:45:43.000Z</updated>
+    <updated>2017-07-24T16:43:17.000Z</updated>
     
-    <content type="html"><![CDATA[<p>iOS7之后，可以使用原生的CIFilter创建二维码，下面是相应的代码，我整理到UIImage分类里面:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">//创建一个二维码图片</div><div class="line">+ (UIImage *)createQRForString:(NSString *)string withSize:(CGFloat)size&#123;</div><div class="line">    NSData *stringData = [string dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line">    // 创建filter</div><div class="line">    CIFilter *qrFilter = [CIFilter filterWithName:@&quot;CIQRCodeGenerator&quot;];</div><div class="line">    // 设置内容和纠错级别</div><div class="line">    [qrFilter setValue:stringData forKey:@&quot;inputMessage&quot;];</div><div class="line">    [qrFilter setValue:@&quot;M&quot; forKey:@&quot;inputCorrectionLevel&quot;];</div><div class="line">    //导出CIImage</div><div class="line">    CIImage *image = qrFilter.outputImage;</div><div class="line">    CGRect extent = CGRectIntegral(image.extent);</div><div class="line">    CGFloat scale = MIN(size/CGRectGetWidth(extent), size/CGRectGetHeight(extent));</div><div class="line">    // 1.创建bitmap;</div><div class="line">    size_t width = CGRectGetWidth(extent) * scale;</div><div class="line">    size_t height = CGRectGetHeight(extent) * scale;</div><div class="line">    CGColorSpaceRef cs = CGColorSpaceCreateDeviceGray();</div><div class="line">    CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, cs, (CGBitmapInfo)kCGImageAlphaNone);</div><div class="line">    CIContext *context = [CIContext contextWithOptions:nil];</div><div class="line">    CGImageRef bitmapImage = [context createCGImage:image fromRect:extent];</div><div class="line">    CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);</div><div class="line">    CGContextScaleCTM(bitmapRef, scale, scale);</div><div class="line">    CGContextDrawImage(bitmapRef, extent, bitmapImage);</div><div class="line">    // 2.保存bitmap到图片</div><div class="line">    CGImageRef scaledImage = CGBitmapContextCreateImage(bitmapRef);</div><div class="line">    CGContextRelease(bitmapRef);</div><div class="line">    CGImageRelease(bitmapImage);</div><div class="line">    //原图</div><div class="line">    UIImage *outputImage = [UIImage imageWithCGImage:scaledImage];</div><div class="line">    UIGraphicsBeginImageContextWithOptions(outputImage.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">    [outputImage drawInRect:CGRectMake(0,0 , size, size)];</div><div class="line">    //水印图</div><div class="line">    UIImage *waterimage = [UIImage imageNamed:@&quot;水印图&quot;];</div><div class="line">    [waterimage drawInRect:CGRectMake((size-waterImagesize)/2.0, (size-waterImagesize)/2.0, waterImagesize, waterImagesize)];</div><div class="line">    UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    return newPic;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+    <content type="html"><![CDATA[<p>iOS7之后，可以使用原生的CIFilter创建二维码，下面是相应的代码，我整理到UIImage分类里面:<br><a id="more"></a><br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建一个二维码图片</span></div><div class="line">+ (<span class="built_in">UIImage</span> *)createQRForString:(<span class="built_in">NSString</span> *)string withSize:(<span class="built_in">CGFloat</span>)size&#123;</div><div class="line">    <span class="built_in">NSData</span> *stringData = [string dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">    <span class="comment">// 创建filter</span></div><div class="line">    <span class="built_in">CIFilter</span> *qrFilter = [<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIQRCodeGenerator"</span>];</div><div class="line">    <span class="comment">// 设置内容和纠错级别</span></div><div class="line">    [qrFilter setValue:stringData forKey:<span class="string">@"inputMessage"</span>];</div><div class="line">    [qrFilter setValue:<span class="string">@"M"</span> forKey:<span class="string">@"inputCorrectionLevel"</span>];</div><div class="line">    <span class="comment">//导出CIImage</span></div><div class="line">    <span class="built_in">CIImage</span> *image = qrFilter.outputImage;</div><div class="line">    <span class="built_in">CGRect</span> extent = <span class="built_in">CGRectIntegral</span>(image.extent);</div><div class="line">    <span class="built_in">CGFloat</span> scale = MIN(size/<span class="built_in">CGRectGetWidth</span>(extent), size/<span class="built_in">CGRectGetHeight</span>(extent));</div><div class="line">    <span class="comment">// 1.创建bitmap;</span></div><div class="line">    size_t width = <span class="built_in">CGRectGetWidth</span>(extent) * scale;</div><div class="line">    size_t height = <span class="built_in">CGRectGetHeight</span>(extent) * scale;</div><div class="line">    <span class="built_in">CGColorSpaceRef</span> cs = <span class="built_in">CGColorSpaceCreateDeviceGray</span>();</div><div class="line">    <span class="built_in">CGContextRef</span> bitmapRef = <span class="built_in">CGBitmapContextCreate</span>(<span class="literal">nil</span>, width, height, <span class="number">8</span>, <span class="number">0</span>, cs, (<span class="built_in">CGBitmapInfo</span>)kCGImageAlphaNone);</div><div class="line">    <span class="built_in">CIContext</span> *context = [<span class="built_in">CIContext</span> contextWithOptions:<span class="literal">nil</span>];</div><div class="line">    <span class="built_in">CGImageRef</span> bitmapImage = [context createCGImage:image fromRect:extent];</div><div class="line">    <span class="built_in">CGContextSetInterpolationQuality</span>(bitmapRef, kCGInterpolationNone);</div><div class="line">    <span class="built_in">CGContextScaleCTM</span>(bitmapRef, scale, scale);</div><div class="line">    <span class="built_in">CGContextDrawImage</span>(bitmapRef, extent, bitmapImage);</div><div class="line">    <span class="comment">// 2.保存bitmap到图片</span></div><div class="line">    <span class="built_in">CGImageRef</span> scaledImage = <span class="built_in">CGBitmapContextCreateImage</span>(bitmapRef);</div><div class="line">    <span class="built_in">CGContextRelease</span>(bitmapRef);</div><div class="line">    <span class="built_in">CGImageRelease</span>(bitmapImage);</div><div class="line">    <span class="comment">//原图</span></div><div class="line">    <span class="built_in">UIImage</span> *outputImage = [<span class="built_in">UIImage</span> imageWithCGImage:scaledImage];</div><div class="line">    <span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(outputImage.size, <span class="literal">NO</span>, [[<span class="built_in">UIScreen</span> mainScreen] scale]);</div><div class="line">    [outputImage drawInRect:<span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">0</span> , size, size)];</div><div class="line">    <span class="comment">//水印图</span></div><div class="line">    <span class="built_in">UIImage</span> *waterimage = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"水印图"</span>];</div><div class="line">    [waterimage drawInRect:<span class="built_in">CGRectMake</span>((size-waterImagesize)/<span class="number">2.0</span>, (size-waterImagesize)/<span class="number">2.0</span>, waterImagesize, waterImagesize)];</div><div class="line">    <span class="built_in">UIImage</span> *newPic = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</div><div class="line">    <span class="built_in">UIGraphicsEndImageContext</span>();</div><div class="line">    <span class="keyword">return</span> newPic;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>PS:该方法传入的string是二维码的内容，size是二维码图片的大小，另外还可以设置二维码的水印图片，就是二维码中间那张小小的图片,waterImagesize是宏定义，定义水印图片的大小。</p>
 <p>以上代码亲测可以!</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;iOS7之后，可以使用原生的CIFilter创建二维码，下面是相应的代码，我整理到UIImage分类里面:&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;
+      &lt;p&gt;iOS7之后，可以使用原生的CIFilter创建二维码，下面是相应的代码，我整理到UIImage分类里面:&lt;br&gt;
     
     </summary>
     
@@ -176,13 +172,13 @@
     <link href="https://linaicai.github.io/2016/04/16/Linux%E6%97%A5%E5%B8%B8%E7%AE%A1%E7%90%86-%E4%B8%80/"/>
     <id>https://linaicai.github.io/2016/04/16/Linux日常管理-一/</id>
     <published>2016-04-16T15:59:06.000Z</published>
-    <updated>2017-03-04T14:39:24.000Z</updated>
+    <updated>2017-07-24T16:42:59.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>最近有个虚拟主机快到期，打算使用Linode上新的VPS所以准备迁移到另一台香港VPS（和虚拟主机同一个代理商），结果发现无法SSH登录，然后打开网址也发现无法访问，SVN也没发刷新，PING却通了，可以肯定的是系统是正常运行的但几乎所有程序都启动不正常，提交了工单，客服回复我是系统卡死，对方帮我重启机器，我重新登录进去后启动SVN服务后发现又无法访问，最后经过客服确认内存溢出。</p>
 <p>第一时间觉得卧槽我的CentOS几乎没怎么动过，一直都能正常运行啊，就算内存几乎爆满，也不至于溢出吧，于是使用<br><code>ps -A</code><br>命令看进程，发现除了一些系统服务进程，并没有可疑进程，不过我想删了一些明显没用到的和多余的总没错吧<br><img src="/2016/04/16/Linux日常管理-一/C2E57850-7519-433D-8B47-8B808F2790F8.png" alt="This is an example image" title="This is an example image"></p>
 <a id="more"></a>
 <p>其中，发现pptpd(已经全面转为使用SS代理)这个以前遗留下来的VPN服务进程，和一堆类似的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/dev/tty1</div><div class="line">/dev/tty2</div><div class="line">/dev/tty3</div><div class="line">/dev/tty4</div><div class="line">/dev/tty5</div><div class="line">/dev/tty6</div></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/dev/</span>tty1</div><div class="line"><span class="regexp">/dev/</span>tty2</div><div class="line"><span class="regexp">/dev/</span>tty3</div><div class="line"><span class="regexp">/dev/</span>tty4</div><div class="line"><span class="regexp">/dev/</span>tty5</div><div class="line"><span class="regexp">/dev/</span>tty6</div></pre></td></tr></table></figure>
 <p>查了资料才知道这东西是因为CentOS系统默认的6个打开的控制台，会驻留内存，于是准备删除多余的，下面就是过程步骤：</p>
 <h3 id="删除pptpd"><a href="#删除pptpd" class="headerlink" title="删除pptpd"></a>删除pptpd</h3><p>由于这个服务是开机启动的，所以要先停止<br><code>service pptpd stop</code><br>然后<br><code>yum remove pptpd</code><br>完事</p>
 <h3 id="删除多余的控制台进程"><a href="#删除多余的控制台进程" class="headerlink" title="删除多余的控制台进程"></a>删除多余的控制台进程</h3><p>首先找到TTY的配置文件编辑</p>
@@ -230,7 +226,7 @@
     <link href="https://linaicai.github.io/2016/03/13/iOS-%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E5%BA%93/"/>
     <id>https://linaicai.github.io/2016/03/13/iOS-如何创建和使用静态库/</id>
     <published>2016-03-12T17:05:12.000Z</published>
-    <updated>2017-03-04T09:45:43.000Z</updated>
+    <updated>2017-07-24T16:43:43.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文引用自<a href="http://blog.ibireme.com/2013/09/18/create-ios-static-framework/" target="_blank" rel="external">iOS 如何创建和使用静态库</a></p>
 <p>iOS里可以用静态链接库和动态链接库，但由于Appstore的政策限制，上架应用只能用苹果提供的动态链接库，第三方的库只能做成静态库。这里介绍一下静态链接库的创建方法和常见的一些问题。</p>
@@ -279,7 +275,7 @@
     <link href="https://linaicai.github.io/2016/03/12/iOS%E5%BC%80%E5%8F%91runtime%E4%B9%8Bmethod/"/>
     <id>https://linaicai.github.io/2016/03/12/iOS开发runtime之method/</id>
     <published>2016-03-12T13:52:07.000Z</published>
-    <updated>2017-03-04T09:45:43.000Z</updated>
+    <updated>2017-07-24T16:43:37.000Z</updated>
     
     <content type="html"><![CDATA[<p><strong>1、理解Method Swizzling</strong></p>
 <p>Method Swizzling 俗称黑魔法，实现原理是iOS的运行时runtime，实际上它是在运行时阶段交换了两个方法的函数指针，iOS应聘的很多时候面试官都喜欢问和关注的技术问题，我们需要对它有所了解，学会运用，因为他确实很强大，有些功能实现的时候使用它能够做到事半功倍。</p>
@@ -310,7 +306,7 @@
     <link href="https://linaicai.github.io/2015/11/12/Linux%E4%B8%8B%E9%85%8D%E7%BD%AEsvn%E6%95%99%E7%A8%8B/"/>
     <id>https://linaicai.github.io/2015/11/12/Linux下配置svn教程/</id>
     <published>2015-11-12T11:41:32.000Z</published>
-    <updated>2017-03-04T09:45:43.000Z</updated>
+    <updated>2017-07-24T16:41:35.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1、安装svn"><a href="#1、安装svn" class="headerlink" title="1、安装svn"></a>1、安装svn</h3><p>命令行下输入：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">svnserve --version</div></pre></td></tr></table></figure></p>
 <p>确定是否已经安装过，如果没有安装，输入以下命令就可以开始安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install subversion</div></pre></td></tr></table></figure></p>
