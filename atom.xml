@@ -5,9 +5,9 @@
   <subtitle>为伊消得人憔悴</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://linaicai.github.io/"/>
+  <link href="http://www.v2job.com/"/>
   <updated>2017-07-24T16:42:01.000Z</updated>
-  <id>https://linaicai.github.io/</id>
+  <id>http://www.v2job.com/</id>
   
   <author>
     <name>皈依</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>属性和实例变量</title>
-    <link href="https://linaicai.github.io/2017/05/20/%E5%B1%9E%E6%80%A7%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/"/>
-    <id>https://linaicai.github.io/2017/05/20/属性和实例变量/</id>
+    <link href="http://www.v2job.com/2017/05/20/%E5%B1%9E%E6%80%A7%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F/"/>
+    <id>http://www.v2job.com/2017/05/20/属性和实例变量/</id>
     <published>2017-05-20T11:43:03.000Z</published>
     <updated>2017-07-24T16:42:01.000Z</updated>
     
@@ -34,17 +34,17 @@
     
     </summary>
     
-      <category term="iOS" scheme="https://linaicai.github.io/categories/iOS/"/>
+      <category term="iOS" scheme="http://www.v2job.com/categories/iOS/"/>
     
     
-      <category term="iOS" scheme="https://linaicai.github.io/tags/iOS/"/>
+      <category term="iOS" scheme="http://www.v2job.com/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>Hexo升级记</title>
-    <link href="https://linaicai.github.io/2017/03/05/Hexo%E5%8D%87%E7%BA%A7%E8%AE%B0/"/>
-    <id>https://linaicai.github.io/2017/03/05/Hexo升级记/</id>
+    <link href="http://www.v2job.com/2017/03/05/Hexo%E5%8D%87%E7%BA%A7%E8%AE%B0/"/>
+    <id>http://www.v2job.com/2017/03/05/Hexo升级记/</id>
     <published>2017-03-05T08:30:20.000Z</published>
     <updated>2017-03-05T10:07:31.000Z</updated>
     
@@ -59,17 +59,17 @@
     
     </summary>
     
-      <category term="HTML" scheme="https://linaicai.github.io/categories/HTML/"/>
+      <category term="HTML" scheme="http://www.v2job.com/categories/HTML/"/>
     
     
-      <category term="Hexo" scheme="https://linaicai.github.io/tags/Hexo/"/>
+      <category term="Hexo" scheme="http://www.v2job.com/tags/Hexo/"/>
     
   </entry>
   
   <entry>
     <title>云南</title>
-    <link href="https://linaicai.github.io/2017/03/05/%E4%BA%91%E5%8D%97/"/>
-    <id>https://linaicai.github.io/2017/03/05/云南/</id>
+    <link href="http://www.v2job.com/2017/03/05/%E4%BA%91%E5%8D%97/"/>
+    <id>http://www.v2job.com/2017/03/05/云南/</id>
     <published>2017-03-05T07:51:39.000Z</published>
     <updated>2017-07-24T16:42:54.000Z</updated>
     
@@ -81,17 +81,17 @@
     
     </summary>
     
-      <category term="生活" scheme="https://linaicai.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://www.v2job.com/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="旅游" scheme="https://linaicai.github.io/tags/%E6%97%85%E6%B8%B8/"/>
+      <category term="旅游" scheme="http://www.v2job.com/tags/%E6%97%85%E6%B8%B8/"/>
     
   </entry>
   
   <entry>
     <title>iOS项目架构小试牛刀</title>
-    <link href="https://linaicai.github.io/2016/06/04/iOS%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80/"/>
-    <id>https://linaicai.github.io/2016/06/04/iOS项目架构小试牛刀/</id>
+    <link href="http://www.v2job.com/2016/06/04/iOS%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80/"/>
+    <id>http://www.v2job.com/2016/06/04/iOS项目架构小试牛刀/</id>
     <published>2016-06-04T14:42:21.000Z</published>
     <updated>2017-07-24T16:43:31.000Z</updated>
     
@@ -103,17 +103,17 @@
     
     </summary>
     
-      <category term="iOS" scheme="https://linaicai.github.io/categories/iOS/"/>
+      <category term="iOS" scheme="http://www.v2job.com/categories/iOS/"/>
     
     
-      <category term="架构" scheme="https://linaicai.github.io/tags/%E6%9E%B6%E6%9E%84/"/>
+      <category term="架构" scheme="http://www.v2job.com/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   
   <entry>
     <title>iOS生成二维码</title>
-    <link href="https://linaicai.github.io/2016/06/04/iOS%E7%94%9F%E6%88%90%E4%BA%8C%E7%BB%B4%E7%A0%81/"/>
-    <id>https://linaicai.github.io/2016/06/04/iOS生成二维码/</id>
+    <link href="http://www.v2job.com/2016/06/04/iOS%E7%94%9F%E6%88%90%E4%BA%8C%E7%BB%B4%E7%A0%81/"/>
+    <id>http://www.v2job.com/2016/06/04/iOS生成二维码/</id>
     <published>2016-06-04T13:38:05.000Z</published>
     <updated>2017-07-24T16:43:17.000Z</updated>
     
@@ -125,17 +125,17 @@
     
     </summary>
     
-      <category term="iOS" scheme="https://linaicai.github.io/categories/iOS/"/>
+      <category term="iOS" scheme="http://www.v2job.com/categories/iOS/"/>
     
     
-      <category term="二维码" scheme="https://linaicai.github.io/tags/%E4%BA%8C%E7%BB%B4%E7%A0%81/"/>
+      <category term="二维码" scheme="http://www.v2job.com/tags/%E4%BA%8C%E7%BB%B4%E7%A0%81/"/>
     
   </entry>
   
   <entry>
     <title>Linux日常管理(一)</title>
-    <link href="https://linaicai.github.io/2016/04/16/Linux%E6%97%A5%E5%B8%B8%E7%AE%A1%E7%90%86-%E4%B8%80/"/>
-    <id>https://linaicai.github.io/2016/04/16/Linux日常管理-一/</id>
+    <link href="http://www.v2job.com/2016/04/16/Linux%E6%97%A5%E5%B8%B8%E7%AE%A1%E7%90%86-%E4%B8%80/"/>
+    <id>http://www.v2job.com/2016/04/16/Linux日常管理-一/</id>
     <published>2016-04-16T15:59:06.000Z</published>
     <updated>2017-07-24T16:42:59.000Z</updated>
     
@@ -148,17 +148,17 @@
     
     </summary>
     
-      <category term="Linux" scheme="https://linaicai.github.io/categories/Linux/"/>
+      <category term="Linux" scheme="http://www.v2job.com/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="https://linaicai.github.io/tags/Linux/"/>
+      <category term="Linux" scheme="http://www.v2job.com/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>iOS 如何创建和使用静态库</title>
-    <link href="https://linaicai.github.io/2016/03/13/iOS-%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E5%BA%93/"/>
-    <id>https://linaicai.github.io/2016/03/13/iOS-如何创建和使用静态库/</id>
+    <link href="http://www.v2job.com/2016/03/13/iOS-%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E5%BA%93/"/>
+    <id>http://www.v2job.com/2016/03/13/iOS-如何创建和使用静态库/</id>
     <published>2016-03-12T17:05:12.000Z</published>
     <updated>2017-07-24T16:43:43.000Z</updated>
     
@@ -175,17 +175,17 @@
     
     </summary>
     
-      <category term="iOS" scheme="https://linaicai.github.io/categories/iOS/"/>
+      <category term="iOS" scheme="http://www.v2job.com/categories/iOS/"/>
     
     
-      <category term="静态库" scheme="https://linaicai.github.io/tags/%E9%9D%99%E6%80%81%E5%BA%93/"/>
+      <category term="静态库" scheme="http://www.v2job.com/tags/%E9%9D%99%E6%80%81%E5%BA%93/"/>
     
   </entry>
   
   <entry>
     <title>iOS开发runtime之Method Swizzling</title>
-    <link href="https://linaicai.github.io/2016/03/12/iOS%E5%BC%80%E5%8F%91runtime%E4%B9%8Bmethod/"/>
-    <id>https://linaicai.github.io/2016/03/12/iOS开发runtime之method/</id>
+    <link href="http://www.v2job.com/2016/03/12/iOS%E5%BC%80%E5%8F%91runtime%E4%B9%8Bmethod/"/>
+    <id>http://www.v2job.com/2016/03/12/iOS开发runtime之method/</id>
     <published>2016-03-12T13:52:07.000Z</published>
     <updated>2017-07-24T16:43:37.000Z</updated>
     
@@ -199,17 +199,17 @@
     
     </summary>
     
-      <category term="iOS" scheme="https://linaicai.github.io/categories/iOS/"/>
+      <category term="iOS" scheme="http://www.v2job.com/categories/iOS/"/>
     
     
-      <category term="runtime" scheme="https://linaicai.github.io/tags/runtime/"/>
+      <category term="runtime" scheme="http://www.v2job.com/tags/runtime/"/>
     
   </entry>
   
   <entry>
     <title>Linux下配置svn教程</title>
-    <link href="https://linaicai.github.io/2015/11/12/Linux%E4%B8%8B%E9%85%8D%E7%BD%AEsvn%E6%95%99%E7%A8%8B/"/>
-    <id>https://linaicai.github.io/2015/11/12/Linux下配置svn教程/</id>
+    <link href="http://www.v2job.com/2015/11/12/Linux%E4%B8%8B%E9%85%8D%E7%BD%AEsvn%E6%95%99%E7%A8%8B/"/>
+    <id>http://www.v2job.com/2015/11/12/Linux下配置svn教程/</id>
     <published>2015-11-12T11:41:32.000Z</published>
     <updated>2019-02-21T08:32:51.898Z</updated>
     
@@ -225,10 +225,10 @@
     
     </summary>
     
-      <category term="Linux" scheme="https://linaicai.github.io/categories/Linux/"/>
+      <category term="Linux" scheme="http://www.v2job.com/categories/Linux/"/>
     
     
-      <category term="SVN" scheme="https://linaicai.github.io/tags/SVN/"/>
+      <category term="SVN" scheme="http://www.v2job.com/tags/SVN/"/>
     
   </entry>
   
