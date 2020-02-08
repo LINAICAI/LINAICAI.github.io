@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.v2job.com/"/>
-  <updated>2020-02-07T04:37:18.028Z</updated>
+  <updated>2020-02-08T10:47:34.130Z</updated>
   <id>http://www.v2job.com/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>自定义大小的SKStoreProductViewController模态控制器</title>
+    <link href="http://www.v2job.com/2020/02/08/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%A7%E5%B0%8F%E7%9A%84SKStoreProductViewController%E6%A8%A1%E6%80%81%E6%8E%A7%E5%88%B6%E5%99%A8/"/>
+    <id>http://www.v2job.com/2020/02/08/自定义大小的SKStoreProductViewController模态控制器/</id>
+    <published>2020-02-08T10:05:07.000Z</published>
+    <updated>2020-02-08T10:47:34.130Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><h3 id="最近公司有一个开发需求，要求SKStoreProductViewController模态弹出时自定义大小，如下图："><a href="#最近公司有一个开发需求，要求SKStoreProductViewController模态弹出时自定义大小，如下图：" class="headerlink" title="最近公司有一个开发需求，要求SKStoreProductViewController模态弹出时自定义大小，如下图："></a>最近公司有一个开发需求，要求SKStoreProductViewController模态弹出时自定义大小，如下图：</h3><p><a href="http://img.v2job.com/2020/02/08/15811583244853.jpeg" data-fancybox="group" data-caption class="fancybox"><img src="http://img.v2job.com/2020/02/08/15811583244853.jpeg" alt title></a></p><h3 id="可以看到SKStoreProductViewController虽然已经以模态方式弹出来，但并没有百分百覆盖遮挡底下的控制器，而iOS13默认的模态弹出，也不是像上图的样子，尝试了很多种方式，最终发现了一个比较暴力的方法："><a href="#可以看到SKStoreProductViewController虽然已经以模态方式弹出来，但并没有百分百覆盖遮挡底下的控制器，而iOS13默认的模态弹出，也不是像上图的样子，尝试了很多种方式，最终发现了一个比较暴力的方法：" class="headerlink" title="可以看到SKStoreProductViewController虽然已经以模态方式弹出来，但并没有百分百覆盖遮挡底下的控制器，而iOS13默认的模态弹出，也不是像上图的样子，尝试了很多种方式，最终发现了一个比较暴力的方法："></a>可以看到SKStoreProductViewController虽然已经以模态方式弹出来，但并没有百分百覆盖遮挡底下的控制器，而iOS13默认的模态弹出，也不是像上图的样子，尝试了很多种方式，最终发现了一个比较暴力的方法：</h3><div class="code-area-wrap"><div class="highlight-tools"><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableDictionary</span> *params = [<span class="built_in">NSMutableDictionary</span> dictionary];</span><br><span class="line">    [params setObject:appID forKey:<span class="built_in">SKStoreProductParameterITunesItemIdentifier</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">SKStoreProductViewController</span> *storeVC = [[<span class="built_in">SKStoreProductViewController</span> alloc] init];</span><br><span class="line"></span><br><span class="line">    [storeVC loadProductWithParameters:params completionBlock:^(<span class="built_in">BOOL</span> result, <span class="built_in">NSError</span> *_Nullable error) &#123;</span><br><span class="line">    &#125;];</span><br><span class="line">    storeVC.delegate = <span class="keyword">self</span>;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> presentViewController:storeVC animated:<span class="literal">YES</span> completion:^&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">UIView</span> *subView <span class="keyword">in</span> storeVC.view.subviews) &#123;</span><br><span class="line">            subView.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.videoPlayerView.frame), storeVC.view.bounds.size.width, storeVC.view.bounds.size.height - <span class="built_in">CGRectGetHeight</span>(<span class="keyword">self</span>.videoPlayerView.frame));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br></pre></td></tr></table></figure></div><h3 id="以上代码的原理是在SKStoreProductViewController模态弹出后迭代SKStoreProductViewController控制器的子视图并修改其相关frame，至于要修改多少，就看你自己的需求了，当然以上方法，在往后的iOS系统版本中并不一定都可行，还需自己测试。"><a href="#以上代码的原理是在SKStoreProductViewController模态弹出后迭代SKStoreProductViewController控制器的子视图并修改其相关frame，至于要修改多少，就看你自己的需求了，当然以上方法，在往后的iOS系统版本中并不一定都可行，还需自己测试。" class="headerlink" title="以上代码的原理是在SKStoreProductViewController模态弹出后迭代SKStoreProductViewController控制器的子视图并修改其相关frame，至于要修改多少，就看你自己的需求了，当然以上方法，在往后的iOS系统版本中并不一定都可行，还需自己测试。"></a>以上代码的原理是在SKStoreProductViewController模态弹出后迭代SKStoreProductViewController控制器的子视图并修改其相关frame，至于要修改多少，就看你自己的需求了，当然以上方法，在往后的iOS系统版本中并不一定都可行，还需自己测试。</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;/assets/css/APlayer.min.css&quot;&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot; cla
+      
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://www.v2job.com/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="http://www.v2job.com/tags/iOS/"/>
+    
+      <category term="ObjC" scheme="http://www.v2job.com/tags/ObjC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LLDB的常用命令</title>
+    <link href="http://www.v2job.com/2020/02/08/LLDB%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://www.v2job.com/2020/02/08/LLDB的常用命令/</id>
+    <published>2020-02-08T09:51:35.000Z</published>
+    <updated>2020-02-08T10:01:58.528Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><div class="code-area-wrap"><div class="highlight-tools"><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">po 打印表达式</span><br><span class="line"></span><br><span class="line">expression 动态执行代码，可以在运行时修改内存中变量的值</span><br><span class="line"></span><br><span class="line">frame 查看当前代码帧信息，查看函数名称、参数和所在位置信息，并且可以进行代码回溯调试</span><br><span class="line"></span><br><span class="line">frame info 打印当前数据帧块的信息</span><br><span class="line">frame variable 获取当前数据帧块的变量信息</span><br><span class="line">frame <span class="keyword">select</span> 【<span class="keyword">count</span>】切换当前数据帧</span><br><span class="line"></span><br><span class="line"><span class="keyword">thread</span> 用来操作线程</span><br><span class="line"><span class="keyword">thread</span> backtrace 查看当前线程中所有数据帧</span><br><span class="line"><span class="keyword">thread</span> <span class="keyword">list</span>查看当前所有被激活的线程</span><br><span class="line"><span class="keyword">thread</span> info查看当前正在调试的线程信息</span><br><span class="line"><span class="keyword">thread</span> <span class="keyword">select</span>【<span class="keyword">count</span>】切换调试的线程</span><br><span class="line"><span class="keyword">help</span> <span class="keyword">thread</span> 查看<span class="keyword">thread</span>相关指令的用法</span><br></pre></td></tr></table></figure></div>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;/assets/css/APlayer.min.css&quot;&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot; cla
+      
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://www.v2job.com/categories/iOS/"/>
+    
+    
+      <category term="LLDB" scheme="http://www.v2job.com/tags/LLDB/"/>
+    
+  </entry>
   
   <entry>
     <title>武汉肺炎如何改变中国</title>
